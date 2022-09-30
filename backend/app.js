@@ -13,7 +13,6 @@ app.post("/user/add", (req, res) => {
 
   //get the new user data from post request
   const userData = req.body;
-  console.log(userData);
   //check if the userData fields are missing
   if (
     userData.fullname == null ||

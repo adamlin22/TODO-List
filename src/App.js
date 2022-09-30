@@ -11,13 +11,20 @@ function App() {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     axios
       .get("/user/list")
       .then((res) => {
-        console.log(res.data);
-        setUserList(res.data);
+        if (isMounted) {
+          setUserList(res.data);
+        }
       })
       .catch((err) => console.log(err));
+
+    return () => {
+      isMounted = false;
+    };
   }, [userList]);
 
   const addUser = async () => {
@@ -109,7 +116,7 @@ function App() {
               <Card.Text>Age: {item.age}</Card.Text>
               <Button
                 variant="danger"
-                onClick={(e) => deleteUser(item.username)}
+                onClick={() => deleteUser(item.username)}
               >
                 Delete
               </Button>
